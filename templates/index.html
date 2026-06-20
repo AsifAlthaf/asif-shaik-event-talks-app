@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sleek dashboard for Google BigQuery release notes and news sharing.">
+    <title>BigQuery Release Insights</title>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Main Sidebar / Filters -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fa-solid fa-cube logo-icon"></i>
+                    <span>BigQuery Hub</span>
+                </div>
+            </div>
+            
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="search-input" placeholder="Search release notes...">
+            </div>
+            
+            <div class="filter-section">
+                <h3>Filter by Category</h3>
+                <ul class="filter-list">
+                    <li class="filter-item active" data-filter="all">
+                        <span class="filter-name"><i class="fa-solid fa-list"></i> All Updates</span>
+                        <span class="badge badge-all" id="count-all">0</span>
+                    </li>
+                    <li class="filter-item" data-filter="Feature">
+                        <span class="filter-name"><i class="fa-solid fa-rocket text-feature"></i> Features</span>
+                        <span class="badge badge-feature" id="count-feature">0</span>
+                    </li>
+                    <li class="filter-item" data-filter="Announcement">
+                        <span class="filter-name"><i class="fa-solid fa-bullhorn text-announcement"></i> Announcements</span>
+                        <span class="badge badge-announcement" id="count-announcement">0</span>
+                    </li>
+                    <li class="filter-item" data-filter="Change">
+                        <span class="filter-name"><i class="fa-solid fa-rotate text-change"></i> Changes</span>
+                        <span class="badge badge-change" id="count-change">0</span>
+                    </li>
+                    <li class="filter-item" data-filter="Issue">
+                        <span class="filter-name"><i class="fa-solid fa-circle-exclamation text-issue"></i> Issues</span>
+                        <span class="badge badge-issue" id="count-issue">0</span>
+                    </li>
+                    <li class="filter-item" data-filter="Breaking">
+                        <span class="filter-name"><i class="fa-solid fa-triangle-exclamation text-breaking"></i> Breaking</span>
+                        <span class="badge badge-breaking" id="count-breaking">0</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Selected Tweet Helper panel inside sidebar (or sticky bottom) -->
+            <div class="tweet-composer-card id="tweet-card-container">
+                <div class="tweet-card-header">
+                    <h4><i class="fa-brands fa-x-twitter"></i> Tweet Composer</h4>
+                    <button class="clear-selection-btn" id="clear-selection" title="Clear selection">Clear</button>
+                </div>
+                <div class="tweet-card-body">
+                    <p class="placeholder-text" id="tweet-placeholder">Select an update from the feed to customize and publish a tweet.</p>
+                    <div class="tweet-composer-area hidden" id="tweet-composer-area">
+                        <textarea id="tweet-textarea" rows="5" maxlength="280" placeholder="Customize your tweet..."></textarea>
+                        <div class="tweet-meta">
+                            <span id="char-counter" class="char-counter">0 / 280</span>
+                            <span class="tweet-warning hidden" id="tweet-len-warning"><i class="fa-solid fa-triangle-exclamation"></i> Over limit</span>
+                        </div>
+                        <button class="tweet-now-btn" id="tweet-now-btn">
+                            <i class="fa-brands fa-x-twitter"></i> Post to X
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-title">
+                    <h1>BigQuery Release Notes</h1>
+                    <p>Stay up to date with the latest features, changes, and announcements.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-refresh" id="refresh-btn" title="Refresh release notes">
+                        <i class="fa-solid fa-arrows-rotate" id="refresh-icon"></i>
+                        <span>Refresh</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Loading Spinner State -->
+            <div class="loader-container" id="loader-container">
+                <div class="spinner"></div>
+                <p>Fetching latest release notes from Google Cloud...</p>
+            </div>
+
+            <!-- Error State -->
+            <div class="error-container hidden" id="error-container">
+                <i class="fa-solid fa-circle-exclamation error-icon"></i>
+                <h2>Failed to load release notes</h2>
+                <p id="error-message">Unknown error occurred</p>
+                <button class="btn btn-primary" id="retry-btn">Retry</button>
+            </div>
+
+            <!-- Grid of Cards -->
+            <div class="notes-feed hidden" id="notes-feed">
+                <!-- Dynamic cards go here -->
+            </div>
+            
+            <div class="no-results hidden" id="no-results">
+                <i class="fa-regular fa-folder-open empty-icon"></i>
+                <h3>No updates found</h3>
+                <p>Try adjusting your filters or search keywords.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
